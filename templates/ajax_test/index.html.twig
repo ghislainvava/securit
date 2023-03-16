@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>JSON Test</h1>
+    <button id="json-button">Click Me!</button>
+
+    <script>
+        var button = document.getElementById('json-button');
+        button.addEventListener('click', function() {
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        console.log(xhr.response); // la réponse JSON de l'écouteur d'événements
+                    } else {
+                        console.log('Une erreur s\'est produite.');
+                    }
+                }
+            };
+
+            xhr.open('GET', '{{ path('json') }}');
+            xhr.send();
+        });
+    </script>
+{% endblock %}

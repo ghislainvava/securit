@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>AJAX Test</h1>
+    <button id="ajax-button">Click Me!</button>
+
+    <script>
+        var button = document.getElementById('ajax-button');
+        button.addEventListener('click', function() {
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        console.log(xhr.response); // la réponse JSON de l'écouteur d'événements
+                    } else {
+                        console.log('Une erreur s\'est produite.');
+                    }
+                }
+            };
+
+            xhr.open('GET', '{{ path('ajax_test') }}');
+            xhr.setRequestHeader('X-Test-Header', 'test');
+            xhr.send();
+        });
+    </script>
+{% endblock %}
